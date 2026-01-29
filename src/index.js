@@ -20,7 +20,7 @@ app.get('/api', (req, res) => {
         hostname  
         });
     } else {
-        return res.send(`COLOR : ${color}, HOSTNAME : ${hostname}`)
+        return res.send(`COLOR : ${color}, HOSTNAME : ${hostname}`);
     }
 });
 
