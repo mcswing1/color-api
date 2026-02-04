@@ -33,6 +33,10 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/ready', (req, res) => {
+    return res.send('ok');
+});
+
+app.get('/up', (req, res) => {
     if (fail_readiness) {
         return res.sendStatus(503);
     }
