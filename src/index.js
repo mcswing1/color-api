@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose'); // Utilize mongoose to connect to MongoDB
+const bodyParser = require('body-parser');
 const { healthRouter} = require('./routes/health');
 const { apiRouter} = require('./routes/api');
 const { rootRouter } = require('./routes/root')
@@ -11,6 +12,7 @@ const delay_startup = process.env.DELAY_STARTUP === 'true'
 
 console.log(`Delay startup : ${delay_startup}`);
 
+app.use(bodyParser.json());
 app.use('/api', apiRouter);
 app.use('/', healthRouter); 
 app.use('/', rootRouter); 
