@@ -4,11 +4,11 @@ const { getColor } = require('../db/color');
 
 const apiRouter = express.Router();
 
-apiRouter.get('/', (req, res) => {
+apiRouter.get('/', async (req, res) => {
     const { format, colorKey } = req.query; //localhost/api?formt=text
     
     console.log(`Color key: ${colorKey}`); 
-    const color = getColor({ key: colorKey });
+    const color = await getColor({ key: colorKey });
     const hostname = getHostname();
 
     if (format === 'json') {

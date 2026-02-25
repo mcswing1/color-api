@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose'); // Utilize mongoose to connect to MongoDB
 const { healthRouter} = require('./routes/health');
 const { apiRouter} = require('./routes/api');
 const { rootRouter } = require('./routes/root')
@@ -22,6 +23,17 @@ if (delay_startup) {
     while (Date.now() - start < 60000) {}
 }
 
-app.listen(port, () => {
+// Connect to the dB
+mongoose
+.connect(process.env.DB_URL)
+.then(() => {
+    console.log('Connected to MongoDB');
+
+    app.listen(port, () => {
     console.log(`Color API listening on port: ${port}`);
+    });
+})
+.catch((err) => {
+        console.error('Could not connect to MongoDB');
+        console.error(err);
 });
