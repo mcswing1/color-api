@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose'); // Utilize mongoose to connect to MongoDB
 const bodyParser = require('body-parser');
+const promBundle = require('express-prom-bundle');
 const { healthRouter} = require('./routes/health');
 const { apiRouter} = require('./routes/api');
 const { rootRouter } = require('./routes/root')
@@ -12,6 +13,14 @@ const delay_startup = process.env.DELAY_STARTUP === 'true'
 
 console.log(`Delay startup : ${delay_startup}`);
 
+const metricsMiddleware = promBundle({
+    includeMethod: true,
+    includeStatusCode: true,
+    includePath: true,
+    includeUp: true,
+});
+
+app.use(metricsMiddleware);
 app.use(bodyParser.json());
 app.use('/api', apiRouter);
 app.use('/', healthRouter); 
